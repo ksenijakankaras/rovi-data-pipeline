@@ -165,6 +165,8 @@ KPIs are defined once as SQL views, so the dashboard and the analysis always use
 
 Built in Databricks AI/BI on the views above. The definition is in [`dashboards/additive_landscape.lvdash.json`](dashboards/additive_landscape.lvdash.json) and can be imported into any Databricks workspace.
 
+Full dashboard as PDF: [`docs/dashboard.pdf`](docs/dashboard.pdf)
+
 ![Dashboard overview](docs/images/dashboard_overview.png)
 ![Dashboard details](docs/images/dashboard_details.png)
 
