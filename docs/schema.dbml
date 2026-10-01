@@ -1,0 +1,60 @@
+// Paste into dbdiagram.io to render the star schema
+
+Table gold_fact_product_additive {
+  product_id varchar [ref: > gold_dim_product.product_id]
+  additive_id varchar [ref: > gold_dim_additive.additive_id]
+  category_key varchar [ref: > gold_dim_category.category_key]
+  brand_key varchar [ref: > gold_dim_brand.brand_key]
+  Note: 'Grain: one row per product-additive pair (factless fact)'
+}
+
+Table gold_fact_product_profile {
+  product_id varchar [pk, ref: - gold_dim_product.product_id]
+  category_key varchar [ref: > gold_dim_category.category_key]
+  brand_key varchar [ref: > gold_dim_brand.brand_key]
+  is_organic boolean
+  has_ingredients boolean
+  nova_group int
+  n_safety int
+  n_texture int
+  n_taste int
+  n_appearance int
+  n_other int
+  n_unknown int
+  additive_count int
+  Note: 'Grain: one row per product'
+}
+
+Table gold_dim_product {
+  product_id varchar [pk]
+  product_name varchar
+  brand_key varchar
+  category_key varchar
+  nova_group int
+  is_organic boolean
+  has_ingredients boolean
+  last_modified timestamp
+}
+
+Table gold_dim_additive {
+  additive_id varchar [pk]
+  e_number varchar
+  name_en varchar
+  name_it varchar
+  primary_purpose varchar
+  purpose_source varchar
+  efsa_overexposure_risk varchar
+  has_eu_colour_warning boolean
+}
+
+Table gold_dim_category {
+  category_key varchar [pk]
+  category_name varchar
+  category_group_key varchar
+  category_group_name varchar
+}
+
+Table gold_dim_brand {
+  brand_key varchar [pk]
+  brand_name varchar
+}

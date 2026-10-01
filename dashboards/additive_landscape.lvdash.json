@@ -1,0 +1,596 @@
+{
+  "datasets": [
+    {
+      "name": "ffee588a",
+      "displayName": "kpi",
+      "queryLines": [
+        "SELECT * FROM workspace.rova.v_kpi_summary"
+      ]
+    },
+    {
+      "name": "6d64e898",
+      "displayName": "categories",
+      "queryLines": [
+        "\tSELECT * FROM workspace.rova.v_category_metrics WHERE products_with_ingredients >= 200 AND category_group_name <> 'Unknown'"
+      ]
+    },
+    {
+      "name": "b6564060",
+      "displayName": "top_additives",
+      "queryLines": [
+        "SELECT * FROM workspace.rova.v_additive_usage ORDER BY products DESC LIMIT 20"
+      ]
+    },
+    {
+      "name": "b5a0ce32",
+      "displayName": "dq_latest",
+      "queryLines": [
+        "SELECT check_name, ROUND(value, 2) AS value, threshold, status FROM workspace.rova.dq_results WHERE run_ts = (SELECT MAX(run_ts) FROM workspace.rova.dq_results)"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "fc056d74",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "2c3bdb6b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ffee588a",
+                  "fields": [
+                    {
+                      "name": "max(products)",
+                      "expression": "MAX(`products`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Products"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(products)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_ingredient_coverage",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ffee588a",
+                  "fields": [
+                    {
+                      "name": "max(ingredient_coverage_pct)",
+                      "expression": "MAX(`ingredient_coverage_pct`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Ingredient Coverage %",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(ingredient_coverage_pct)",
+                  "formatTemplate": "{{ @formatted }}%"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_additive_density",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ffee588a",
+                  "fields": [
+                    {
+                      "name": "max(additive_density)",
+                      "expression": "MAX(`additive_density`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Additive Density"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(additive_density)"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_appearance_share",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ffee588a",
+                  "fields": [
+                    {
+                      "name": "max(appearance_share_pct)",
+                      "expression": "MAX(`appearance_share_pct`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Appearance Share %",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(appearance_share_pct)",
+                  "formatTemplate": "{{ @formatted }}%"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "counter_dq_pass_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ffee588a",
+                  "fields": [
+                    {
+                      "name": "max(dq_pass_rate_pct)",
+                      "expression": "MAX(`dq_pass_rate_pct`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Data Quality Pass Rate %",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(dq_pass_rate_pct)",
+                  "formatTemplate": "{{ @formatted }}%"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_additive_density_by_category",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6d64e898",
+                  "fields": [
+                    {
+                      "name": "max(additive_density)",
+                      "expression": "MAX(`additive_density`)"
+                    },
+                    {
+                      "name": "category_group_name",
+                      "expression": "`category_group_name`"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "MAX(`additive_density`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Dietary supplements and desserts contain the most additives",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "max(additive_density)",
+                  "axis": {
+                    "title": "Avg additives per product"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "category_group_name",
+                  "axis": {
+                    "title": "Category"
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "measure-reversed",
+                      "measure": {
+                        "fieldName": "max(additive_density)"
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_appearance_share_by_category",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6d64e898",
+                  "fields": [
+                    {
+                      "name": "max(appearance_share_pct)",
+                      "expression": "MAX(`appearance_share_pct`)"
+                    },
+                    {
+                      "name": "category_group_name",
+                      "expression": "`category_group_name`"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "MAX(`appearance_share_pct`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "About 1 in 5 desserts contains an additive used only for appearance",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "max(appearance_share_pct)",
+                  "axis": {
+                    "title": "% of products with an appearance-only additive"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "category_group_name",
+                  "axis": {
+                    "title": "Category"
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "measure-reversed",
+                      "measure": {
+                        "fieldName": "max(appearance_share_pct)"
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "dq_latest_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b5a0ce32",
+                  "fields": [
+                    {
+                      "name": "check_name",
+                      "expression": "`check_name`"
+                    },
+                    {
+                      "name": "value",
+                      "expression": "`value`"
+                    },
+                    {
+                      "name": "threshold",
+                      "expression": "`threshold`"
+                    },
+                    {
+                      "name": "status",
+                      "expression": "`status`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Data quality checks – latest run",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "check_name",
+                    "headerAlignment": "left"
+                  },
+                  {
+                    "fieldName": "value",
+                    "headerAlignment": "right"
+                  },
+                  {
+                    "fieldName": "threshold",
+                    "headerAlignment": "right"
+                  },
+                  {
+                    "fieldName": "status",
+                    "headerAlignment": "left"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 28,
+            "width": 12,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "notes_definitions",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Notes & Definitions\n",
+                "\n",
+                "**Products** — Total Italian products in Open Food Facts.\n",
+                "\n",
+                "**Ingredient Coverage %** — Share of products with an ingredient list.\n",
+                "\n",
+                "**Additive Density** — Average number of additives per product (among products with ingredients).\n",
+                "\n",
+                "**Appearance Share %** — Share of products with an ingredient list that contain at least one additive whose only role is appearance (colours, glazing agents).\n",
+                "\n",
+                "**Category Gap %** — Share of products with an ingredient list that have no category (6.9%). The gap the category-prediction model will fill.\n",
+                "\n",
+                "**Data Quality Pass Rate %** — Share of automated data quality checks passing.\n",
+                "\n",
+                "**Additive Purposes:**\n",
+                "\n",
+                "* **Safety** — preservatives, antioxidants, acidity regulators\n",
+                "* **Texture** — emulsifiers, stabilizers, thickeners, raising agents\n",
+                "* **Taste** — sweeteners, flavour enhancers\n",
+                "* **Appearance** — colours, glazing agents\n",
+                "\n",
+                "> Additive metrics cover only products with an ingredient list (13.6% of 266,749 Italian products). Data: Open Food Facts, licensed under ODbL."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 35,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "bar_top_additives",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b6564060",
+                  "fields": [
+                    {
+                      "name": "Products",
+                      "expression": "`products`"
+                    },
+                    {
+                      "name": "name_en",
+                      "expression": "`name_en`"
+                    },
+                    {
+                      "name": "primary_purpose",
+                      "expression": "`primary_purpose`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Citric acid and texture agents dominate the top additives",
+                  "fields": []
+                }
+              },
+              "jsonSpec": {
+                "type": "vega-lite",
+                "spec": "{\"$schema\":\"https://vega.github.io/schema/vega-lite/v6.json\",\"data\":{\"name\":\"databricks_query\"},\"width\":\"container\",\"height\":\"container\",\"config\":{\"autosize\":{\"type\":\"fit\",\"contains\":\"padding\"}},\"transform\":[{\"calculate\":\"toNumber(datum.Products)\",\"as\":\"products_num\"}],\"mark\":\"bar\",\"encoding\":{\"x\":{\"field\":\"products_num\",\"type\":\"quantitative\",\"title\":\"products\"},\"y\":{\"field\":\"name_en\",\"type\":\"nominal\",\"title\":\"Additive\",\"sort\":{\"field\":\"products_num\",\"order\":\"descending\"}},\"color\":{\"field\":\"primary_purpose\",\"type\":\"nominal\",\"scale\":{\"domain\":[\"safety\",\"texture\",\"taste\",\"appearance\",\"other\"],\"range\":[\"#2E7D32\",\"#1565C0\",\"#EF6C00\",\"#8E24AA\",\"#616161\"]}}}}"
+              },
+              "version": 1,
+              "widgetType": "custom-vega-viz",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "Products"
+                  },
+                  {
+                    "fieldName": "name_en"
+                  },
+                  {
+                    "fieldName": "primary_purpose"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 12,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
