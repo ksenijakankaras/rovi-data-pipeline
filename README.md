@@ -197,7 +197,7 @@ reference/      Additive dictionary used for classification and the script that 
 
 ## How to run
 
-1. Create a free Databricks workspace (Free Edition works).
+1. Create a free Databricks workspace.
 2. Download the Open Food Facts CSV export (`en.openfoodfacts.org.products.csv.gz`, about 1 GB compressed) and upload it to a Unity Catalog volume at `/Volumes/workspace/default/raw/`. Upload `reference/additives.json` to the same volume.
 3. Import the notebooks and run them in order: `01` → `02` → `03` → `04`.
 4. Import `dashboards/additive_landscape.lvdash.json` via **Dashboards → Import**.
